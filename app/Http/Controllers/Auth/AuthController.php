@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json(['data' => array_merge($user->toArray(), ['auth-token' => $token]), 'status' => 200]);
+        return response()->json(array_merge($user->toArray(), ['auth-token' => $token]));
     }
 
     public function login(LoginRequest $request)
@@ -35,12 +35,12 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth-token')->plainTextToken;
-        return response()->json(['data' => array_merge($user->toArray(), ['auth-token' => $token]), 'status' => 401]);
+        return response()->json(array_merge($user->toArray(), ['auth-token' => $token]));
     }
 
     public function logout(Request $request) 
     {
-        Auth::user()->tokens()->delete();
+        $request->user()->tokens()->delete();
         return response()->json(['status' => 200]);
     }
 }
