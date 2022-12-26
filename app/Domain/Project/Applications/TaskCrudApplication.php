@@ -3,24 +3,23 @@
 namespace App\Domain\Project\Applications;
 
 use Illuminate\Http\Request;
-use App\Domain\Project\Models\Project;
-use App\Domain\Project\Services\ProjectService;
+use App\Domain\Project\Services\TaskService;
 
-class ProjectCrudApplication
+class TaskCrudApplication
 {
 
-    public function __construct(protected ProjectService $projectService)
+    public function __construct(protected TaskService $taskService)
     {
     }
 
     public function find(int $id)
     {
-        return $this->projectService->findById($id);
+        return $this->taskService->findById($id);
     }
 
     public function getAll()
     {
-        return $this->projectService->findAll();
+        return $this->taskService->findAll();
     }
 
     // public function create(Request $request)

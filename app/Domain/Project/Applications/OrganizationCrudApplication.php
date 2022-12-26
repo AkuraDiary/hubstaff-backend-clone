@@ -2,9 +2,9 @@
 
 namespace App\Domain\Project\Applications;
 
-use App\Domain\IAM\Services\OrganizationService;
-use App\Domain\Project\Models\Organization;
 use Illuminate\Http\Request;
+use App\Domain\Project\Models\Organization;
+use App\Domain\Project\Services\OrganizationService;
 
 class OrganizationCrudApplication
 {
