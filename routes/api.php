@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\IAM\RoleController;
 use App\Http\Controllers\IAM\UserController;
 use App\Http\Controllers\Project\OrganizationController;
 use App\Http\Controllers\Project\ProjectController;
 use App\Http\Controllers\Project\TaskController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +21,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+});
+
+
 
 Route::get('/roles', [RoleController::class, 'index']);
 Route::get('/roles/{id}', [RoleController::class, 'show']);
