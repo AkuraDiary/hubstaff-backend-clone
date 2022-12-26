@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\IAM\Services;
+namespace App\Domain\Project\Services;
 
 use App\Domain\Project\Models\Project;
 use App\Shareds\BaseService;
