@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\IAM\RoleController;
 use App\Http\Controllers\IAM\UserController;
+use App\Http\Controllers\Project\OrganizationController;
+use App\Http\Controllers\Project\ProjectController;
+use App\Http\Controllers\Project\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +24,12 @@ Route::get('/users/{id}', [UserController::class, 'show']);
 
 Route::get('/roles', [RoleController::class, 'index']);
 Route::get('/roles/{id}', [RoleController::class, 'show']);
+
+Route::get('/organizations', [OrganizationController::class, 'index']);
+Route::get('/organizations/{id}', [OrganizationController::class, 'show']);
+
+Route::get('/projects', [ProjectController::class, 'index']);
+Route::get('/projects/{id}', [ProjectController::class, 'show']);
+
+Route::get('/tasks', [TaskController::class, 'index']);
+Route::get('/tasks/{id}', [TaskController::class, 'show']);
