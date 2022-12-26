@@ -6,7 +6,7 @@ use App\Domain\Project\Applications\OrganizationCrudApplication;
 use App\Domain\Project\Applications\OrganizationIndexApplication;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller {
+class OrganizationController extends Controller {
 
     public function __construct(
         private readonly OrganizationIndexApplication $organizationIndexApplication,
