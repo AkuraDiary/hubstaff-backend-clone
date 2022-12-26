@@ -3,12 +3,19 @@
 namespace App\Domain\Project\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return TaskFactory::new();
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -32,5 +39,9 @@ class Task extends Model
 
     public function assignee () {
         return $this->belongsTo(User::class, 'assignee_id', 'id');
+    }
+
+    public function project () {
+        return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 }
