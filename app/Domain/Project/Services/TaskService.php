@@ -30,23 +30,14 @@ class TaskService extends BaseService
         DB::transaction(function () use ($id) {
             $taskData = $this->findById($id);
 
-            if ($taskData->status == self::DONE) {
-                return response()->json(['message' => 'Project status is already set to Done'], 400);
-            }
-
             $projectData = Project::where('id', $taskData->project_id)->first();
 
-            $taskHour = strtok($taskData->timespan, ':');
-            $taskMinute = substr($taskData->timespan, strlen($taskHour) + 1, 2);
-            $taskSecond = substr($taskData->timespan, ((strlen($taskHour) + 1) + (strlen($taskMinute) + 1)), 2); 
-            
-            $projectHour = strtok($projectData->timespan, ':');
-            $projectMinute = substr($projectData->timespan, strlen($projectHour) + 1, 2);
-            $projectSecond = substr($projectData->timespan, ((strlen($projectHour) + 1) + (strlen($projectMinute) + 1)), 2); 
+            $taskTime = $this->splitTime($taskData->time_needed); 
+            $projectTime = $this->splitTime($projectData->timespan);
 
-            $sumHour = (int)$taskHour + (int)$projectHour;
-            $sumMinute = (int)$taskMinute + (int)$projectMinute;
-            $sumSecond = (int)$taskSecond + (int)$projectSecond;
+            $sumHour = $taskTime['hour'] + $projectTime['hour'];
+            $sumMinute = $taskTime['minute'] + $projectTime['minute'];
+            $sumSecond = $taskTime['second'] + $projectTime['second'];
 
             if ($sumMinute >= 60) {
                 $sumMinute %= 60;
@@ -58,14 +49,30 @@ class TaskService extends BaseService
                 $sumMinute += 1;
             }
 
+            $sumHour < 10 ? $sumHour = '0' . strval($sumHour) : $sumHour = strval($sumHour);
+            $sumMinute < 10 ? $sumMinute = '0' . strval($sumMinute) : $sumMinute = strval($sumMinute);
+            $sumSecond < 10 ? $sumSecond = '0' . strval($sumSecond) : $sumSecond = strval($sumSecond);
+
             $taskData->update([
                 'status' => self::DONE,
                 'done_date' => now(),
             ]);
 
             $projectData->update([
-                'timespan' => "$sumHour:$sumMinute:$sumSecond",
+                'timespan' => $sumHour . ':' . $sumMinute . ':' . $sumSecond,
             ]);
         });
+    }
+
+    public function splitTime ($time) {
+        $hour = strtok($time, ':');
+        $minute = substr($time, strlen($hour) + 1, 2);
+        $second = substr($time, ((strlen($hour) + 1) + (strlen($minute) + 1)), 2);
+
+        return [
+            'hour' => (int)$hour,
+            'minute' => (int)$minute,
+            'second' => (int)$second
+        ];
     }
 }
