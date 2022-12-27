@@ -27,6 +27,4 @@ class TaskController extends Controller {
         $this->taskCrudApplication->taskDone($id);
         return response()->json(['message' => 'Task Done']);
     }
-
-    
 }
