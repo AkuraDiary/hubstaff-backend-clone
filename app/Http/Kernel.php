@@ -44,6 +44,10 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ],
+
+        'sessions' => [
+            \Illuminate\Session\Middleware\StartSession::class,
+        ]
     ];
 
     /**

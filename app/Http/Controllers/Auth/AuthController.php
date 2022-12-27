@@ -23,25 +23,33 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth-token')->plainTextToken;
-        
+
         return response()->json(array_merge($user->toArray(), ['auth-token' => $token]));
     }
 
     public function login(LoginRequest $request)
     {
-        $user = User::where('username', $request->username)->first();
-        
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return null;
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            $user = User::where('username', $request->username)->first();
+
+            $request->session()->regenerate();
+            $token = $user->createToken('auth-token')->plainTextToken;
+            Auth::user()->token = $token;
+
+            return response()->json(Auth::user(), 200);
         }
 
-        $token = $user->createToken('auth-token')->plainTextToken;
-        return response()->json(array_merge($user->toArray(), ['auth-token' => $token]));
+        return null;
     }
 
-    public function logout(Request $request) 
+    public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
+        Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        
         return response()->json(['status' => 200]);
     }
 }

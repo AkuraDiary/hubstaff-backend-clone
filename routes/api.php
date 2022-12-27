@@ -21,26 +21,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
-
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['sessions']], function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::get('/roles', [RoleController::class, 'index']);
-Route::get('/roles/{id}', [RoleController::class, 'show']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
 
-Route::get('/organizations', [OrganizationController::class, 'index']);
-Route::get('/organizations/{id}', [OrganizationController::class, 'show']);
+    Route::get('/roles', [RoleController::class, 'index']);
+    Route::get('/roles/{id}', [RoleController::class, 'show']);
 
-Route::get('/projects', [ProjectController::class, 'index']);
-Route::get('/projects/{id}', [ProjectController::class, 'show']);
-Route::get('/{user_id}/projects', [ProjectController::class, 'userProject']);
+    Route::get('/organizations', [OrganizationController::class, 'index']);
+    Route::get('/organizations/{id}', [OrganizationController::class, 'show']);
 
-Route::get('/tasks', [TaskController::class, 'index']);
-Route::get('/tasks/{id}', [TaskController::class, 'show']);
-Route::post('/tasks/{id}/task-done', [TaskController::class, 'markTaskDone']);
+    Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/projects/{id}', [ProjectController::class, 'show']);
+    Route::get('/{user_id}/projects', [ProjectController::class, 'userProject']);
+
+    Route::get('/tasks', [TaskController::class, 'index']);
+    Route::get('/tasks/{id}', [TaskController::class, 'show']);
+    Route::post('/tasks/{id}/task-done', [TaskController::class, 'markTaskDone']);
+});
