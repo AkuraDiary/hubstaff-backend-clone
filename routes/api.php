@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Common\TaskImageController;
 use App\Http\Controllers\IAM\RoleController;
 use App\Http\Controllers\IAM\UserController;
 use App\Http\Controllers\Project\OrganizationController;
@@ -45,3 +46,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/tasks/{id}', [TaskController::class, 'show']);
     Route::post('/tasks/{id}/task-done', [TaskController::class, 'markTaskDone']);
 });
+
+
+Route::get('/tasks/uwah/upload-image', [TaskImageController::class, 'uploadImage']);

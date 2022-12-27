@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Project;
 
-use App\Domain\Project\Applications\TaskCrudApplication;
-use App\Domain\Project\Applications\TaskIndexApplication;
+use Illuminate\Http\Request;
 use App\Domain\Project\Models\Task;
 use App\Http\Controllers\Controller;
+use App\Domain\Project\Applications\TaskCrudApplication;
+use App\Domain\Project\Applications\TaskIndexApplication;
 
 class TaskController extends Controller {
 
@@ -22,6 +23,10 @@ class TaskController extends Controller {
 
     public function show (int $id) {
         return response()->json($this->taskCrudApplication->find($id));
+    }
+
+    public function save (Request $request) {
+        $this->taskCrudApplication->create($request);
     }
 
     public function markTaskDone (int $id) {

@@ -4,6 +4,7 @@ namespace App\Domain\Project\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Domain\Common\Models\TaskImage;
 use App\Domain\IAM\Models\User;
 use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,5 +45,9 @@ class Task extends Model
 
     public function project () {
         return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
+
+    public function imageList() {
+        return $this->hasMany(TaskImage::class, 'id', 'task_id');
     }
 }
