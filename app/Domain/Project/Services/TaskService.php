@@ -29,6 +29,11 @@ class TaskService extends BaseService
     {
         DB::transaction(function () use ($id) {
             $taskData = $this->findById($id);
+
+            if ($taskData->status == self::DONE) {
+                return response()->json(['message' => 'Project status is already set to Done'], 400);
+            }
+
             $projectData = Project::where('id', $taskData->project_id)->first();
 
             $taskHour = strtok($taskData->timespan, ':');
