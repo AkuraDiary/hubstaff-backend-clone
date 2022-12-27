@@ -23,25 +23,33 @@ class ProjectCrudApplication
         return $this->projectService->findAll();
     }
 
-    // public function create(Request $request)
-    // {
-    //     $organization = new Project();
-    //     $organization->fill([
-    //         'name' => $request->name,
-    //     ]);
-    //     $this->projectService->create($organization);
-    // }
+    public function create(Request $request)
+    {
+        $project = new Project();
+        $project->fill([
+            'name' => $request->name,
+            'description' => $request->description,
+            'organization_id' => $request->organization_id
+        ]);
+        $this->projectService->create($project);
+    }
 
-    // public function update (int $id, Request $request) {
-    //     $organization = $this->find($id);
-    //     $organization->fill([
-    //         'name' => $request->name,
-    //     ]);
-    //     $this->projectService->update($organization);
-    // }
+    public function update (int $id, Request $request) {
+        $project = $this->find($id);
+        $project->fill([
+            'name' => $request->name,
+            'description' => $request->description,
+            'organization_id' => $request->organization_id
+        ]);
+        $this->projectService->update($project);
+    }
 
-    // public function delete(int $id): void
-    // {
-    //     $this->projectService->delete($id);
-    // }
+    public function delete(int $id): void
+    {
+        $this->projectService->delete($id);
+    }
+
+    public function userProject (int $user_id) {
+        return $this->projectService->userProject($user_id);
+    }
 }
