@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->text('description')->default('-');
-            $table->time('timespan')->default(0);
+            $table->string('timespan')->default('00:00:00');
             $table->foreignId('organization_id')->constrained('organizations');
             $table->timestamps();
         });
