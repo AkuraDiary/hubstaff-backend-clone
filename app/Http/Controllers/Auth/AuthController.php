@@ -23,13 +23,14 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('auth-token')->plainTextToken;
-
+        
         return response()->json(array_merge($user->toArray(), ['auth-token' => $token]));
     }
 
     public function login(LoginRequest $request)
     {
         $user = User::where('username', $request->username)->first();
+        
         if (!$user || !Hash::check($request->password, $user->password)) {
             return null;
         }
