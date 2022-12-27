@@ -16,11 +16,11 @@ class OrganizationController extends Controller {
     }
 
     public function index () {
-        return response()->json(['data' => ($this->organizationIndexApplication->fetch())->toArray(), 'status' => 200]);
+        return response()->json($this->organizationIndexApplication->fetch());
     }
 
     public function show (int $id) {
-        return response()->json(['data' => ($this->organizationCrudApplication->find($id))->toArray(), 'status' => 200]);
+        return response()->json($this->organizationCrudApplication->find($id));
     }
 
     

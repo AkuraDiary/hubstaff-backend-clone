@@ -16,11 +16,11 @@ class RoleController extends Controller {
 }
 
     public function index () {
-        return response()->json(['data' => ($this->roleIndexApplication->fetch())->toArray(), 'status' => 200]);
+        return response()->json($this->roleIndexApplication->fetch());
     }
 
     public function show (int $id) {
-        return response()->json(['data' => ($this->roleCrudApplication->find($id))->toArray(), 'status' => 200]);
+        return response()->json($this->roleCrudApplication->find($id));
     }
 
     

@@ -16,11 +16,16 @@ class TaskController extends Controller {
     }
 
     public function index () {
-        return response()->json(['data' => ($this->taskIndexApplication->fetch())->toArray(), 'status' => 200]);
+        return response()->json($this->taskIndexApplication->fetch());
     }
 
     public function show (int $id) {
-        return response()->json(['data' => ($this->taskCrudApplication->find($id))->toArray(), 'status' => 200]);
+        return response()->json($this->taskCrudApplication->find($id));
+    }
+
+    public function markTaskDone (int $id) {
+        $this->taskCrudApplication->taskDone($id);
+        return response()->json(['message' => 'Task Done']);
     }
 
     

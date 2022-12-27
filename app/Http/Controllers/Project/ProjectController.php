@@ -16,12 +16,14 @@ class ProjectController extends Controller {
     }
 
     public function index () {
-        return response()->json(['data' => ($this->projectIndexApplication->fetch())->toArray(), 'status' => 200]);
+        return response()->json($this->projectIndexApplication->fetch());
     }
 
     public function show (int $id) {
-        return response()->json(['data' => ($this->projectCrudApplication->find($id))->toArray(), 'status' => 200]);
+        return response()->json($this->projectCrudApplication->find($id));
     }
 
-    
+    public function userProject (int $user_id) {
+        return $this->projectCrudApplication->userProject($user_id);
+    }
 }

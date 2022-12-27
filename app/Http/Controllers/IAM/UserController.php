@@ -16,11 +16,11 @@ class UserController extends Controller {
     }
 
     public function index () {
-        return response()->json(['data' => ($this->userIndexApplication->fetch())->toArray(), 'status' => 200]);
+        return response()->json($this->userIndexApplication->fetch());
     }
 
     public function show (int $id) {
-        return response()->json(['data' => ($this->userCrudApplication->find($id))->toArray(), 'status' => 200]);
+        return response()->json($this->userCrudApplication->find($id));
     }
 
     
