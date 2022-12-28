@@ -48,4 +48,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 
-Route::get('/tasks/uwah/upload-image', [TaskImageController::class, 'uploadImage']);
+Route::post('/tasks/{id}/upload-image', [TaskImageController::class, 'uploadImage']);
