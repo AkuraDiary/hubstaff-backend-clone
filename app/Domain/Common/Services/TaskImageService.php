@@ -13,30 +13,23 @@ class TaskImageService extends BaseService
 {
     public function __construct(
         private readonly Task $task
-        )
-    {
+    ) {
         parent::__construct($task);
-        
     }
 
-    // public function uploadImage() {
-    //     // $taskData = Task::where('id', 4)->with('project')->first();
-    //     // if (File::isDirectory($taskData->project->name)) {
-
-    //     // }
-    // }
-
-    public function uploadImage(int $id, Request $request) {
-        if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('public/Image'), $filename);    
-            //dd($filename);
+    public function uploadImage(int $id, Request $request)
+    {
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('/images/task/'), $filename);
+            
+            TaskImage::create([
+                'image_path' => $filename,
+                'task_id' => $id
+            ]);
         }
-        
-        TaskImage::create([
-        'image_path' => $filename,
-        'task_id' => $id
-        ]);
+
+        return response()->json(['message' => 'No image file found, please input the required image'], 403);
     }
 }
