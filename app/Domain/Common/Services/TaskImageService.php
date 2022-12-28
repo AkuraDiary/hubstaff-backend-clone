@@ -28,15 +28,15 @@ class TaskImageService extends BaseService
 
     public function uploadImage(int $id, Request $request) {
         if($request->file('image')){
-               $file= $request->file('image');
-               $filename= date('YmdHi').$file->getClientOriginalName();
-               $file-> move(public_path('public/Image'), $filename);
-            
-           }
-   
-   TaskImage::create([
-   'image_path' => $filename,
-   'task_id' => $id
-   ]);
-   }
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('public/Image'), $filename);    
+            //dd($filename);
+        }
+        
+        TaskImage::create([
+        'image_path' => $filename,
+        'task_id' => $id
+        ]);
+    }
 }
