@@ -25,7 +25,7 @@ class TaskImageService extends BaseService
             $file->move(public_path('/images/task/'), $filename);
             
             TaskImage::create([
-                'image_path' => $filename,
+                'file_path' => $filename,
                 'task_id' => $id
             ]);
         }
