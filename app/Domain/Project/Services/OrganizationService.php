@@ -7,7 +7,9 @@ use App\Domain\Project\Models\Organization;
 
 class OrganizationService extends BaseService {
 
-    protected $with = [];
+    protected $with = [
+        'projects'
+    ];
 
     public function __construct(
         private readonly Organization $organization,
