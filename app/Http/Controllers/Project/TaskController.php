@@ -7,6 +7,7 @@ use App\Domain\Project\Models\Task;
 use App\Http\Controllers\Controller;
 use App\Domain\Project\Applications\TaskCrudApplication;
 use App\Domain\Project\Applications\TaskIndexApplication;
+use App\Http\Request\Project\TaskUpdateRequest;
 
 class TaskController extends Controller {
 
@@ -32,7 +33,7 @@ class TaskController extends Controller {
         return response()->json(['message' => 'Successfully created new task']);
     }
 
-    public function update (int $id, Request $request) {
+    public function update (int $id, TaskUpdateRequest $request) {
         $this->taskCrudApplication->update($id, $request);
         return response()->json(['message' => 'Successfully updated task']);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Project;
 use App\Domain\Project\Applications\ProjectCrudApplication;
 use App\Domain\Project\Applications\ProjectIndexApplication;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Project\ProjectUpdateRequest;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller {
@@ -29,7 +30,7 @@ class ProjectController extends Controller {
         return response()->json(['message' => 'Successfully added new Project']);
     }
 
-    public function update (int $id, Request $request) {
+    public function update (int $id, ProjectUpdateRequest $request) {
         $this->projectCrudApplication->update($id, $request);
         return response()->json(['message' => 'Project successfully updated']);
     }

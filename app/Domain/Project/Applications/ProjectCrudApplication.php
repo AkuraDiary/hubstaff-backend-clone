@@ -5,6 +5,7 @@ namespace App\Domain\Project\Applications;
 use Illuminate\Http\Request;
 use App\Domain\Project\Models\Project;
 use App\Domain\Project\Services\ProjectService;
+use App\Http\Requests\Project\ProjectUpdateRequest;
 
 class ProjectCrudApplication
 {
@@ -34,13 +35,9 @@ class ProjectCrudApplication
         $this->projectService->create($project);
     }
 
-    public function update (int $id, Request $request) {
+    public function update (int $id, ProjectUpdateRequest $request) {
         $project = $this->find($id);
-        $project->fill([
-            'name' => $request->name,
-            'description' => $request->description,
-            'organization_id' => $request->organization_id
-        ]);
+        $project->fill($request->validated());
         $this->projectService->update($project);
     }
 

@@ -5,6 +5,7 @@ namespace App\Domain\IAM\Applications;
 use App\Domain\IAM\Models\User;
 use Illuminate\Http\Request;
 use App\Domain\IAM\Services\UserService;
+use App\Http\Requests\IAM\UserUpdateRequest;
 
 class UserCrudApplication
 {
@@ -42,16 +43,9 @@ class UserCrudApplication
         $this->userService->create($user);
     }
 
-    public function update (int $id, Request $request) {
+    public function update (int $id, UserUpdateRequest $request) {
         $user = $this->find($id);
-        $user->fill([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'organization_id' => $request->organization_id,
-            'role_id' => $request->role_id
-        ]);
+        $user->fill($request->validated());
         $this->userService->update($user);
     }
 

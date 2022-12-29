@@ -5,6 +5,7 @@ namespace App\Domain\Project\Applications;
 use App\Domain\Project\Models\Task;
 use Illuminate\Http\Request;
 use App\Domain\Project\Services\TaskService;
+use App\Http\Request\Project\TaskUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 
 class TaskCrudApplication
@@ -41,16 +42,9 @@ class TaskCrudApplication
         $this->taskService->create($task);
     }
 
-    public function update (int $id, Request $request) {
+    public function update (int $id, TaskUpdateRequest $request) {
         $task = $this->find($id);
-        $task->fill([
-            'name' => $request->name,
-            'description' => $request->description,
-            'time_needed' => date('H:i:s', $request->time_needed),
-            'assigner_id' => Auth::user()->id,
-            'assignee_id' => $request->assignee_id,
-            'project_id' => $request->project_id
-        ]);
+        $task->fill($request->validated());
         $this->taskService->update($task);
     }
 

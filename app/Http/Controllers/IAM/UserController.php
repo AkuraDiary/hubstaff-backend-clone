@@ -5,6 +5,7 @@ namespace App\Http\Controllers\IAM;
 use App\Http\Controllers\Controller;
 use App\Domain\IAM\Applications\UserCrudApplication;
 use App\Domain\IAM\Applications\UserIndexApplication;
+use App\Http\Requests\IAM\UserUpdateRequest;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
@@ -29,7 +30,7 @@ class UserController extends Controller {
         return response()->json(['message' => 'User successfully created']);
     }
 
-    public function update (int $id, Request $request) {
+    public function update (int $id, UserUpdateRequest $request) {
         $this->userCrudApplication->update($id, $request);
         return response()->json(['message' => 'User successfully updated']);
     }
