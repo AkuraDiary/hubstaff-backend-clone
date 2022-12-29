@@ -30,4 +30,8 @@ class Organization extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function projects () {
+        return $this->hasMany(Project::class, 'organization_id', 'id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Domain\IAM\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Domain\Project\Models\Organization;
+use App\Domain\Project\Models\Task;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -61,5 +62,9 @@ class User extends Authenticatable
 
     public function organization () {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function tasks () {
+        return $this->hasMany(Task::class, 'assignee_id', 'id');
     }
 }
