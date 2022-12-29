@@ -38,7 +38,7 @@ class TaskCrudApplication
             'assignee_id' => $request->assignee_id,
             'project_id' => $request->project_id
         ]);
-        $this->projectService->create($task);
+        $this->taskService->create($task);
     }
 
     public function update (int $id, Request $request) {
@@ -51,12 +51,12 @@ class TaskCrudApplication
             'assignee_id' => $request->assignee_id,
             'project_id' => $request->project_id
         ]);
-        $this->projectService->update($task);
+        $this->taskService->update($task);
     }
 
     public function delete(int $id): void
     {
-        $this->projectService->delete($id);
+        $this->taskService->delete($id);
     }
 
     public function taskDone (int $id) {
