@@ -10,6 +10,8 @@ use App\Domain\Project\Applications\TaskIndexApplication;
 
 class TaskController extends Controller {
 
+    const DONE = 'Done';
+
     public function __construct(
         private readonly TaskIndexApplication $taskIndexApplication,
         private readonly TaskCrudApplication $taskCrudApplication
@@ -25,8 +27,23 @@ class TaskController extends Controller {
         return response()->json($this->taskCrudApplication->find($id));
     }
 
-    public function save (Request $request) {
+    public function create (Request $request) {
         $this->taskCrudApplication->create($request);
+        return response()->json(['message' => 'Successfully created new task']);
+    }
+
+    public function update (int $id, Request $request) {
+        $this->taskCrudApplication->update($id, $request);
+        return response()->json(['message' => 'Successfully updated task']);
+    }
+
+    public function delete (int $id) {
+        $taskData = $this->taskCrudApplication->find($id);
+        if ($taskData->status == self::DONE) {
+            return response()->json(['message' => 'Deletion Failed, cannot delete an already done task']);
+        }
+        $this->taskCrudApplication->delete($id);
+        return response()->json(['message' => 'Deletion Success']);
     }
 
     public function markTaskDone (int $id) {
